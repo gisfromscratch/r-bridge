@@ -8,11 +8,11 @@ set pkg_main_ver=1.0.0
 echo Building '%pkg_name%' package
 
 set ORIG_PATH=%PATH%
-set Rbinpath="C:\Program Files\R\R-3.1.3\bin\x64"
+set Rbinpath="C:\bin\R-3.2.1\bin\x64"
 set Rcmd=%Rbinpath%\Rcmd.exe
 set Rscript=%Rbinpath%\Rscript.exe
 
-PATH=C:\Rtools\bin;C:\Rtools\gcc-4.6.3\bin;%PATH%
+PATH=C:\bin\Rtools\bin;C:\bin\Rtools\gcc-4.6.3\bin;%PATH%
 
 :::: add build number to the package version - first line
 FOR /F "skip=1 tokens=3 delims= " %%I IN (..\buildnum.h) DO (set /a u=%%I)
