@@ -286,6 +286,11 @@ SEXP R_getEnv()
   return vals.get();
 }
 
+///
+/// Added for tracing the product_info instance
+///
+#include <sstream>
+
 extern DWORD g_main_TID;
 SEXP R_AoInitialize()
 {
@@ -294,6 +299,20 @@ SEXP R_AoInitialize()
     ::CoInitialize(NULL);
   }
   const arcobject::product_info &info= arcobject::AoInitialize();
+
+  ///
+  /// Added for tracing the product_info instance
+  ///
+  using namespace std;
+  wstringstream infoStream;
+  infoStream << "license:'" << info.license << "'" << endl;
+  infoStream << "version:'" << info.version << "'" << endl;
+  infoStream << "install path:'" << info.install_path << "'" << endl;
+  OutputDebugStringW(infoStream.str().c_str());
+  ///
+  /// End of tracing the product_info instance
+  ///
+
   if (info.license == L"-")
     showError<true>("Could not bind to a valid ArcGIS installation");
 
