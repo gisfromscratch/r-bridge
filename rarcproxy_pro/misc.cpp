@@ -298,8 +298,8 @@ SEXP R_AoInitialize()
   {
     ::CoInitialize(NULL);
   }
+  
   const arcobject::product_info &info= arcobject::AoInitialize();
-
   ///
   /// Added for tracing the product_info instance
   ///
@@ -314,7 +314,14 @@ SEXP R_AoInitialize()
   ///
 
   if (info.license == L"-")
-    showError<true>("Could not bind to a valid ArcGIS installation");
+  {
+	  // Trying to get the current path variable
+	  EnvironmentVariable environment;
+	  environment.printValueOf(L"PATH");
+	  
+	  showError<true>("Could not bind to a valid ArcGIS installation");
+  }
+    
 
   SEXP ns = R_FindNamespace(Rf_mkString("arcgisbinding"));
   ATLTRACE("SEXP type:%s", Rf_type2char(TYPEOF(ns)));
